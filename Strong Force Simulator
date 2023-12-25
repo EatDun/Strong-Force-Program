@@ -2,7 +2,6 @@ import java.lang.Math;
 import java.util.Scanner;
 
 class Quark {
-    
     String color;
     
     void setColor(String newColor) {
@@ -72,10 +71,40 @@ class Quark {
             return "Red";
         }
     }
+    
+    public static String nextColor1Method (String color1, String color2) {
+        if (color1.equals("Red")) {
+            double num = Math.random();
+            if (num > .5) {
+                return "Blue";
+            }
+            else {
+                return "Green";
+            }
+        }
+        else if (color1.equals("Green")) {
+            double num = Math.random();
+            if (num > .5) {
+                return "Blue";
+            }
+            else {
+                return "Red";
+            }
+        }
+        else {
+            double num = Math.random();
+            if (num > .5) {
+                return "Red";
+            }
+            else {
+                return "Green";
+            }
+        }
+    }
 }
 
+
 class Gluon {
-    
     String color;
     String antiColor;
     
@@ -112,36 +141,58 @@ class Gluon {
 }
 
 class StrongForce {
-    
     public static void main(String[] args) {
-    
-        Quark quarkOne = new Quark();
-        Quark quarkTwo = new Quark();
-        Quark quarkThree = new Quark();
-        Gluon gluonOneTwo = new Gluon();
-        Gluon gluonTwoThree = new Gluon();
-        Gluon gluonThreeOne = new Gluon();
-
-        String qOneColor = Quark.color1Method();
-        String qTwoColor = Quark.color2Method(qOneColor);
-        String qThreeColor = Quark.color3Method(qOneColor, qTwoColor);
-        String gOneTwoColor = Gluon.colorMethod(qTwoColor);
-        String gTwoThreeColor = Gluon.colorMethod(qThreeColor);
-        String gThreeOneColor = Gluon.colorMethod(qOneColor);
-        String gOneTwoAntiColor = Gluon.antiColorMethod(qOneColor, qTwoColor);
-        String gTwoThreeAntiColor = Gluon.antiColorMethod(qTwoColor, qThreeColor);
-        String gThreeOneAntiColor = Gluon.antiColorMethod(qThreeColor, qOneColor);
-
-        quarkOne.color = qOneColor;
-        quarkTwo.color = qTwoColor;
-        quarkThree.color = qThreeColor;
-        gluonOneTwo.setColor(gOneTwoColor);
-        gluonOneTwo.setAntiColor(gOneTwoAntiColor);
-        gluonTwoThree.setColor(gTwoThreeColor);
-        gluonTwoThree.setAntiColor(gTwoThreeAntiColor);
-        gluonThreeOne.setColor(gThreeOneColor);
-        gluonThreeOne.setAntiColor(gThreeOneAntiColor);
+        Scanner scanner = new Scanner(System.in);
         
-        System.out.println("Quark1 color: " + quarkOne.color + "\nGluon1/2 color: " + gluonOneTwo.color + " / anti " + gluonOneTwo.antiColor + "\nQuark2 color: " + quarkTwo.color + "\nGluon2/3 color: " + gluonTwoThree.color + " / anti " + gluonTwoThree.antiColor + "\nQuark3 color: " + quarkThree.color + "\nGluon3/1 color: " + gluonThreeOne.color + " / anti " + gluonThreeOne.antiColor);
+        String prevQOneColor = null;
+        String prevQTwoColor = null;
+        String prevQThreeColor = null;
+
+        while (true) {
+            Quark quarkOne = new Quark();
+            Quark quarkTwo = new Quark();
+            Quark quarkThree = new Quark();
+            Gluon gluonOneTwo = new Gluon();
+            Gluon gluonTwoThree = new Gluon();
+            Gluon gluonThreeOne = new Gluon();
+
+            String qOneColor, qTwoColor, qThreeColor;
+            do {
+                qOneColor = Quark.color1Method();
+                qTwoColor = Quark.color2Method(qOneColor);
+                qThreeColor = Quark.color3Method(qOneColor, qTwoColor);
+            } while (qOneColor.equals(prevQOneColor) || qTwoColor.equals(prevQTwoColor) || qThreeColor.equals(prevQThreeColor));
+
+            String gOneTwoColor = Gluon.colorMethod(qTwoColor);
+            String gTwoThreeColor = Gluon.colorMethod(qThreeColor);
+            String gThreeOneColor = Gluon.colorMethod(qOneColor);
+            String gOneTwoAntiColor = Gluon.antiColorMethod(qOneColor, qTwoColor);
+            String gTwoThreeAntiColor = Gluon.antiColorMethod(qTwoColor, qThreeColor);
+            String gThreeOneAntiColor = Gluon.antiColorMethod(qThreeColor, qOneColor);
+
+            quarkOne.color = qOneColor;
+            quarkTwo.color = qTwoColor;
+            quarkThree.color = qThreeColor;
+            gluonOneTwo.setColor(gOneTwoColor);
+            gluonOneTwo.setAntiColor(gOneTwoAntiColor);
+            gluonTwoThree.setColor(gTwoThreeColor);
+            gluonTwoThree.setAntiColor(gTwoThreeAntiColor);
+            gluonThreeOne.setColor(gThreeOneColor);
+            gluonThreeOne.setAntiColor(gThreeOneAntiColor);
+
+            System.out.println("Quark1 color: " + quarkOne.color + "\nGluon1/2 color: " + gluonOneTwo.color + " / anti " + gluonOneTwo.antiColor + "\nQuark2 color: " + quarkTwo.color + "\nGluon2/3 color: " + gluonTwoThree.color + " / anti " + gluonTwoThree.antiColor + "\nQuark3 color: " + quarkThree.color + "\nGluon3/1 color: " + gluonThreeOne.color + " / anti " + gluonThreeOne.antiColor);
+
+            System.out.println("Press Enter to generate the next sequence or type 'exit' to quit:");
+            String input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("exit")) {
+                System.out.println("Exiting...");
+                break;
+            }
+            
+            prevQOneColor = qOneColor;
+            prevQTwoColor = qTwoColor;
+            prevQThreeColor = qThreeColor;
+        }
     }
 }
