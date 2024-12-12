@@ -4,10 +4,6 @@ import java.util.Scanner;
 class Quark {
     String color;
     
-    void setColor(String newColor) {
-        String color = newColor;
-    }
-    
     public static String color1Method() {
         double num = Math.random();
         if (num < 0.33) {
